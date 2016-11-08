@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Add User
+{% endblock %}
+
+{% block header %}
+    <form action="logout" id="logout">
+      <span id="username">Logged in as {{ name }}</span>
+      <input class="action-button" id="logout-button" type="submit" value="Logout">
+    </form>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="section">
+			<!-- <a href="{{ url_for('create_trip') }}"> Create User </a> -->
+		</div>
+		<h1>Enter User's Info</h1>
+		<form action="" method="POST" name="login">
+			{{ form.hidden_tag() }}
+			<!-- <div class="divider"></div> -->
+			<!-- <div class="section"> -->
+				<p>
+					Name: <br>
+					{{form.username(size=120)}} <br>
+				</p>
+				<p>
+					Email: <br>
+					{{form.email(size=93)}} <br>
+				</p>
+			<input class="action-button" type="submit" value="Add User">
+			<button class="return-button"><a href="{{ url_for('trips') }}">Return to Dashboard</a></button><br>	
+
+			
+
+			</p>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
