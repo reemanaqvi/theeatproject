@@ -6,19 +6,18 @@
 
 
 {% block content %}
-	
-	  <!-- {% if error %}<p class="error">Error: {{ error }}{% endif %} -->
 
-	  <form id="login-form" action="{{ url_for('login') }}" method="POST">
-	    <dl>
-	      <dt>Username
-	      <dd><input type="text" name="username">
-	      <dt>Password
-	      <dd><input type="password" name="password">
-	      <dd><input id="submit-button" type="submit" value="Login">
-	    </dl>
-	    Don't have an account? <a href="{{ url_for('signup') }}">Create One</a>
 
-	  </form>
-	
+
+
+<br><h3>You must log in to list your item</h3>
+	<form id="login-form" action="login" method="post">
+		<label for="username">USERNAME</label><br>
+		<input type="text" name="username"></input><br><br>
+		<label for="password">PASSWORD</label><br>
+		<input type="text" name="password"></input><br>
+		<input class="submit-button" id="login" type="submit" value="Submit">
+
+	</form>
+
 {% endblock %}

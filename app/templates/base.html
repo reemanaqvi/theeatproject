@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 
 <html>
   <head>
@@ -6,37 +6,38 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <script type="text/javascript" src="/static/interactions.js"></script> 
 
-    <!-- {% block styles %}{% endblock %} -->
+    <style>{% block styles %}{% endblock %}</style>
   </head>
 
   <body>
   
     <header>
-      <!-- <div id="header-object1"> -->
-          <img id="logo" src="/static/images/logo.png">  
-      <!-- </div> -->
+      <img id="logo" src="/static/images/logo.png">  
       <div id="header-object2">
           <h2>The Eat Project</h2>
       </div>
     </header>
 
+    {% block content %}
+    <form action="logout" class="logout-form">
+      <br>Logged in as {{ name }}
+      <input class="logout-button" id="logout-button" type="submit" value="Logout">
+    </form>
+
+    {% endblock %}
     
-    
-  	
-<!--       {% if not session.logged_in %}
-        <a href="{{ url_for('login') }}">log in</a>
-      {% else %}
-        <a href="{{ url_for('logout') }}">log out</a>
-      {% endif %} -->
-    
+<!--     
+  
 
 
-    {% block content %}{% endblock %}
+    
 
 
   <footer>
     <h5>Copyright placeholder</h5>
   </footer>
+  
   </body>
 </html>

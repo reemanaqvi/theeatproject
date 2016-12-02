@@ -1,25 +1,32 @@
 drop table if exists users;
 create table users (
-	user_id INTEGER PRIMARY KEY,
+	user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,
-	email TEXT NOT NULL
+	street_address TEXT NOT NULL,
+	city TEXT NOT NULL,
+	state TEXT NOT NULL,
+	zip INTEGER NOT NULL,
+	password TEXT NOT NULL
 	);
 
-drop table if exists trips;
-create table trips (
-	trip_id INTEGER PRIMARY KEY,
-	trip_name TEXT NOT NULL,
-	destination TEXT NOT NULL,
-	friend TEXT NOT NULL,
-	trip_user TEXT REFERENCES users(username)
+drop table if exists food;
+create table food (
+	food_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	food_name TEXT NOT NULL,
+	ingredients TEXT NOT NULL,
+	diet_restriction TEXT NOT NULL,
+	cuisine_type TEXT NOT NULL,
+	price INTEGER NOT NULL,
+	phone_num INTEGER NOT NULL
+	-- image BLOB NOT NULL
 	);
 
--- users and trips have many to many relationship
-drop table if exists user_trips;
-create table user_trips (
-	id INTEGER PRIMARY KEY,
-	user_id INTEGER,
-	trip_id INTEGER,
-	FOREIGN KEY (user_id) REFERENCES users(user_id),
-	FOREIGN KEY (trip_id) REFERENCES trips(trip_id)
+-- users and foods have many to many relationship
+drop table if exists user_foods;
+create table user_foods (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	user INTEGER,
+	food INTEGER,
+	FOREIGN KEY (user) REFERENCES users(user_id),
+	FOREIGN KEY (food) REFERENCES foods(food_id)
 	);

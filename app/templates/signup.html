@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  EatProject:Signup
+  EatProject: Signup
 {% endblock %}
 
 
@@ -9,7 +9,7 @@
   <h2>Login</h2>
   <!-- {% if error %}<p class="error">Error: {{ error }}{% endif %} -->
   <h2> Sign Up Form</h2>
-  <form id="signup-form" action="{{ url_for('signup') }}" method="POST">
+  <form id="signup-form" method="POST">
     <dl>
       <dt>Full Name:
       <dd><input type="text" name="username">
@@ -71,7 +71,7 @@
           <option value="WV">West Virginia</option>
           <option value="WI">Wisconsin</option>
           <option value="WY">Wyoming</option>
-        </select>       
+        </select>
       <dt>Zipcode:
       <dd><input type="text" name="zipcode"><br>
       <dt>Country:

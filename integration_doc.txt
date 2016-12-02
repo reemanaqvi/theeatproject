@@ -1,0 +1,7 @@
+We followed the logic of the travel app, and this app flows in a very similar fashion. The idea is that someone should be able to use this app without logging in, so the flow allows for users to simply access the app simply for it’s map functionality.
+
+If one desires to ‘post’ a meal on the site, they are routed to a login page where they can either log in as a returning user (and have their credential authenticated against the sqlite db record at that time), or be routed to a signup page where their user information will be routed to the ‘users’ table in our database.
+
+Then, the logged in user will have the option to be routed to the ‘food creation’ page, where they can enter all the components of their food offering into a form that populates an entry in our ‘food’ table. Logged in users can also delete their offerings when supply is exhausted.
+
+At all times, the users will be able to log out and be routed back to the home page (map).
