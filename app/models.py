@@ -65,3 +65,10 @@ def insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, pho
         food_id = cur.lastrowid
         cur.execute("INSERT INTO user_foods (food,user) VALUES (?,?)", (food_id,user_id))
         con.commit()
+
+def insert_user(username, street_address, city, state, zip_code, password):
+    with sql.connect("app.db") as con:
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON")
+        cur.execute("INSERT INTO users (username, street_address, city, state, zip_code, password) VALUES (?,?,?,?,?,?)", (username, street_address, city, state, zip_code, password))
+        con.commit()

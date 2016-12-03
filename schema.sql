@@ -5,7 +5,7 @@ create table users (
 	street_address TEXT NOT NULL,
 	city TEXT NOT NULL,
 	state TEXT NOT NULL,
-	zip INTEGER NOT NULL,
+	zip_code INTEGER NOT NULL,
 	password TEXT NOT NULL
 	);
 

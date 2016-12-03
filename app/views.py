@@ -31,19 +31,21 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method=='POST':
-        user = request.form.get("username")
-        password = request.form.get("password")
-		# print "type of user is: "
-		# print user
-        if authenticate(user, password):
-            myid = retrieve_user_id(user)
-            session["id"] = myid[0][0]
-            session["username"] = user
-            session["password"] = password
-            return redirect(url_for('display_user_foods'))
-        else:
-            return redirect(url_for('index'))
+	userForm = SignupForm()
+	if userForm.validate_on_submit():
+		fullname = userForm.fullname.data
+		username = userForm.username.data
+		street_address = userForm.street_address.data
+		city = userForm.city.data
+		state = userForm.state.data
+		zip_code = userForm.zip_code.data
+		country = userForm.country.data
+		password = userForm.password.data
+		print ("userForm.username")
+		userid = escape(session["username"])
+		insert_user(username, street_address, city, state, zip_code, password)
+		return redirect('/index')
+	return render_template('home.html')
 
 @app.route('/logout')
 def logout():
