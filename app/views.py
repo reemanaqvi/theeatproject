@@ -11,7 +11,8 @@ def index():
 		username = escape(session['username'])
 		return redirect(url_for('display_user_foods'))
 	else:
-		return render_template('signup.html')
+		userForm = SignupForm()
+		return redirect(url_for('sign_up'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -29,29 +30,23 @@ def login():
         else:
             return redirect(url_for('index'))
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
+@app.route('/sign_up', methods=['GET', 'POST'])
+def sign_up():
 	userForm = SignupForm()
+	# if request.method=='POST':
 	if userForm.validate_on_submit():
-		fullname = userForm.fullname.data
 		username = userForm.username.data
-		street_address = userForm.street_address.data
-		city = userForm.city.data
-		state = userForm.state.data
-		zip_code = userForm.zip_code.data
-		country = userForm.country.data
 		password = userForm.password.data
-		print ("userForm.username")
-		userid = escape(session["username"])
-		insert_user(username, street_address, city, state, zip_code, password)
-		return redirect('/index')
-	return render_template('home.html')
+		insert_user(username, password)
+		print(username)
+		return render_template('home.html')
+	return render_template('signup.html', form=userForm)
 
 @app.route('/logout')
 def logout():
 	session.pop('username', None)
-	session.pop('email', None)
-	return redirect(url_for('index'))
+	session.pop('password', None)
+	return redirect(url_for('login'))
 
 
 @app.route('/display_user_foods')
@@ -76,34 +71,34 @@ def retrieve_foods(userid):
             query.append(result[0])
     return query
 
-# @app.route('/trip')
-# def display_trip():
-#     userid = escape(session['id'])
-#     trips = retrieve_trips(userid)
-#     print trips
-#     return render_template('trip.html', trips=trips)
-
-# @app.route('/delete_trip', methods=['GET','POST'])
-# def delete_trip():
-#     data = json.loads(request.form.get('data'))
-#     id = int(data['id'].encode('ascii','ignore'))
-#     remove_trips(id)
-#     return True
 
 @app.route('/add_item', methods=['GET', 'POST'])
-def create_food():
-    foodForm = FoodForm()
-    if foodForm.validate_on_submit():
-        food_name = foodForm.food_name.data
-        ingredients = foodForm.ingredients.data
-        diet_restriction = foodForm.diet_restriction.data
-        cuisine_type = foodForm.cuisine_type.data
-        price = foodForm.price.data
-        phone_num = foodForm.phone_num.data
-        image = foodForm.image.data
-        # print("tripForm.friend")
-        # print tripForm
-        userid = escape(session['id'])
-        insert_food(food_name, ingredients, diet_restriction, cuisine_type, price, phone_num, image, user_id)
-        return redirect('/index')
-    return render_template('create_food.html', form=foodForm)
+def add_item():
+	foodForm = FoodForm()
+	print('meh')
+	if foodForm.validate_on_submit():
+		print("here")
+		food_name = foodForm.food_name.data
+		ingredients = foodForm.ingredients.data
+		diet_restriction = foodForm.diet_restriction.data
+		cuisine_type = foodForm.cuisine_type.data
+		price = foodForm.price.data
+		phone_num = foodForm.phone_num.data
+		street_address = foodForm.street_address.data
+		city = foodForm.city.data
+		state = foodForm.state.data
+		zip_code = foodForm.zip_code.data
+		country = foodForm.country.data
+		userid = escape(session['user_id'])
+		insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, userid, street_address, city, state, zip_code)
+		return render_template('home.html')
+	return render_template('add_item.html', form=foodForm)
+
+
+
+@app.route('/delete_food', methods=['GET','POST'])
+def delete_food():
+    data = json.loads(request.form.get('data'))
+    id = int(data['id'].encode('ascii','ignore'))
+    remove_food(id)
+    return True

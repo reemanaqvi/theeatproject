@@ -9,9 +9,10 @@
   <h2>Login</h2>
   <!-- {% if error %}<p class="error">Error: {{ error }}{% endif %} -->
   <h2> Sign Up Form</h2>
-  <form id="signup-form" method="POST">
+  <form action="/sign_up" method="post" id="signup-form" name="login">
+    {{ form.hidden_tag() }}
     <dl>
-      <dt>Full Name:
+      <!-- <dt>Full Name:
       <dd><input type="text" name="username">
       <dt>Street Address:
       <dd><input type="text" name="street-address">
@@ -76,12 +77,18 @@
       <dd><input type="text" name="zipcode"><br>
       <dt>Country:
       <dd><input type="text" name="country"><br><br>
-      <h4>Set Login Credentials</h4>
-      <dt>Username:
-      <dd><input type="text" name="username">
-      <dt>Password:
-      <dd><input type="password" name="password">
+      <h4>Set Login Credentials</h4> -->
+      <div>
+      Username: <br>
+      {{ form.username(size=120) }} <br>
+      </div>
+      <div>
+      Password: <br>
+      {{ form.password(size=20) }} <br>
+      </div>
     </dl>
-    <dd><input id="submit-button2" type="submit" value="Create Account">
+    <dd>
+      <!-- <p><input id="submit-button2" type="submit" id="signup" value="Sign Up"></p> -->
+      <p><input type="submit" id="signup" value="Sign Up"></p>
   </form>
 {% endblock %}

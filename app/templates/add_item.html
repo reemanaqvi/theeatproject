@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+	EatProject: Add Item
+{% endblock %}
+
+{% block content %}
+
+
+    <br><h3>Enter Food Details</h3>
+    <form action="/add_item" method="post" id="food-form" name="login">
+			{{ form.hidden_tag() }}
+<!--       <div class="divider"></div>
+      <div class="section"> -->
+	        <p>
+	          Name of Food Item:<br>
+	          {{ form.food_name(size=60) }}<br>
+	        </p>
+	        <p>
+	          Ingredients:<br>
+	          {{ form.ingredients(size=60) }}<br>
+	        </p>
+	        <p>
+	          Diet Type<br>
+	          {{ form.diet_restriction }}<br>
+	        </p>
+	        <p>
+	          Cuisine:<br>
+	          {{ form.cuisine_type(size=60) }}<br>
+	        </p>
+	        <p>
+	          Price:<br>
+	          {{ form.price(size=60) }}<br>
+	        </p>
+	        <p>
+	          Phone number:<br>
+	          {{ form.phone_num(size=60) }}<br>
+	        </p>
+					<p>
+	          Street Address:<br>
+	          {{ form.street_address(size=120) }}<br>
+	        </p>
+					<p>
+	          City:<br>
+	          {{ form.city(size=120) }}<br>
+	        </p>
+					<p>
+	          State:<br>
+	          {{ form.state(size=120) }}<br>
+	        </p>
+					<p>
+	          Zip Code:<br>
+	          {{ form.zip_code(size=120) }}<br>
+	        </p>
+					<p>
+	          Countyr:<br>
+	          {{ form.country(size=120) }}<br>
+	        </p>
+
+        	<!-- <p><input type="submit-button" value="List Item Now!"></p> -->
+					<p><input type="submit" id="add_item" value="Post Item"></p>
+    </form>
+
+
+
+{% endblock %}

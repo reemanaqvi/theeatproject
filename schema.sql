@@ -2,10 +2,6 @@ drop table if exists users;
 create table users (
 	user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,
-	street_address TEXT NOT NULL,
-	city TEXT NOT NULL,
-	state TEXT NOT NULL,
-	zip_code INTEGER NOT NULL,
 	password TEXT NOT NULL
 	);
 
@@ -17,7 +13,11 @@ create table food (
 	diet_restriction TEXT NOT NULL,
 	cuisine_type TEXT NOT NULL,
 	price INTEGER NOT NULL,
-	phone_num INTEGER NOT NULL
+	phone_num INTEGER NOT NULL,
+	street_address TEXT NOT NULL,
+	city TEXT NOT NULL,
+	state TEXT NOT NULL,
+	zip_code INTEGER NOT NULL
 	-- image BLOB NOT NULL
 	);
 

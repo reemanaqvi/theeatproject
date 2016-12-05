@@ -72,3 +72,25 @@ function initAutocomplete() {
     map.fitBounds(bounds);
   });
 }
+
+$(document).on('click', 'button.remove_tr', function() {
+    // console.log($(this).attr("id"));
+    $.ajax({
+      url: "/delete_food",
+      type: "post",
+      data: { data:
+        JSON.stringify({
+          "id": $(this).attr("id")
+        })
+      },
+      success: function(response) {
+          response
+      }
+    });
+
+    $(this).parent().parent().remove();
+
+    // retrieve user input
+    // var user_input = $('#search-field').val();
+    // callAPI(user_input)
+})
