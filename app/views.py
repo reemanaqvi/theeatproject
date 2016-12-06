@@ -12,23 +12,22 @@ def index():
 		return redirect(url_for('display_user_foods'))
 	else:
 		userForm = SignupForm()
-		return redirect(url_for('sign_up'))
+		return render_template('home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method=='POST':
-        user = request.form.get("username")
-        password = request.form.get("password")
-		# print "type of user is: "
-		# print user
-        if authenticate(user, password):
-            myid = retrieve_user_id(user)
-            session["id"] = myid[0][0]
-            session["username"] = user
-            session["password"] = password
-            return redirect(url_for('display_user_foods'))
-        else:
-            return redirect(url_for('index'))
+	loginForm = LoginForm()
+	if request.method=='POST':
+		username = loginForm.username.data
+		password = loginForm.password.data
+		if authenticate(user, password):
+			myid = retrieve_user_id(user)
+			session["id"] = myid[0][0]
+			session["username"] = username
+			session["password"] = password
+			return render_template('home.html')
+		else:
+			return redirect(url_for('login'))
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
@@ -39,37 +38,34 @@ def sign_up():
 		password = userForm.password.data
 		insert_user(username, password)
 		print(username)
-		return render_template('home.html')
+		myid = retrieve_user_id(username)
+		session["user_id"] = myid[0][0]
+		session["username"] = username
+		session["password"] = password
+		return redirect(url_for('add_item'))
 	return render_template('signup.html', form=userForm)
+
+@app.route('/home')
+def home():
+	userid = escape(session['user_id'])
+	food = retrieve_all_foods()
+	return render_template('home.html', food=food)
 
 @app.route('/logout')
 def logout():
 	session.pop('username', None)
 	session.pop('password', None)
-	return redirect(url_for('login'))
+	# return redirect(url_for('login'))
+	return redirect(url_for('home'))
 
 
-@app.route('/display_user_foods')
+@app.route('/display_user_foods', methods=['GET', 'POST'])
 def display_user_foods():
     userid = escape(session['user_id'])
-    foods = retrieve_foods(userid)
-    print (foods)
-    return render_template('trip.html', trips=trips)
+    food = retrieve_foods(userid)
+    print (food)
+    return render_template('seller_profile.html', food=food)
 
-def retrieve_foods(userid):
-    query = []
-    with sql.connect("app.db") as con:
-        con.row_factory = sql.Row
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON")
-        result_cur = cur.execute("select food from user_foods where user =?",(userid,)).fetchall()
-        for item in result_cur:
-            print ("retrieving foods for this user")
-            print (item[0])
-        for item in result_cur:
-            result = cur.execute("select * from foods where food_id = ?",(item[0],)).fetchall()
-            query.append(result[0])
-    return query
 
 
 @app.route('/add_item', methods=['GET', 'POST'])
@@ -91,7 +87,7 @@ def add_item():
 		country = foodForm.country.data
 		userid = escape(session['user_id'])
 		insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, userid, street_address, city, state, zip_code)
-		return render_template('home.html')
+		return redirect(url_for('display_user_foods'))
 	return render_template('add_item.html', form=foodForm)
 
 

@@ -22,11 +22,11 @@ create table food (
 	);
 
 -- users and foods have many to many relationship
-drop table if exists user_foods;
-create table user_foods (
+drop table if exists foods_user;
+create table foods_user (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	user INTEGER,
-	food INTEGER,
-	FOREIGN KEY (user) REFERENCES users(user_id),
-	FOREIGN KEY (food) REFERENCES foods(food_id)
+	userid INTEGER,
+	foodid INTEGER,
+	FOREIGN KEY (userid) REFERENCES users(user_id),
+	FOREIGN KEY (foodid) REFERENCES food(food_id)
 	);

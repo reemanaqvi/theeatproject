@@ -5,13 +5,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
    <script type="text/javascript" src="/static/interactions.js"></script>
 
-<!-- STYLING HERE BECAUSE GOOGLE MAPS BREAKS IF LINKED TO A CSS FILE -->
+   <!-- STYLING HERE BECAUSE GOOGLE MAPS BREAKS IF LINKED TO A CSS FILE -->
    <style>
    		html, body {
    			height: 100%;
    			padding: 0;
    			margin: 0;
-        font-family: Optima;
 		  }
       h3{
         text-align: center;
@@ -21,7 +20,6 @@
    			width: 70%;
    			margin-right: 15%;
    			margin-left: 15%;
-        margin-bottom: 3%;
         box-shadow: 0px 0px 5px #888888;
    		}
    		header {
@@ -84,47 +82,6 @@
       #target {
         width: 345px;
       }
-      table {
-        text-align: center;
-        width: 86%;
-        text-align: center;
-        box-shadow: 0px 0px 10px #888888;
-        border: 2px solid black;
-        padding: 2%;
-        margin-right: 7%;
-        margin-left: 7%;
-        margin-bottom: 14%;
-      }
-      #logout-form{
-        text-align: right;
-        margin-right: 2%;
-      }
-      #add-item {
-        float: left;
-        margin-left: 2%;
-      }
-      #login-button {
-        float: right;
-        margin-right: 2%;
-      }
-      .submit-button {
-        background-color: #cef442;
-        width: 10%;
-        height: 5%;
-        font-size: 16px;
-        color: black;
-        -moz-border-radius:8px;
-        -webkit-border-radius:8px;
-        border-radius: 2px;
-        cursor:pointer;
-        text-decoration:none;
-        border: none;
-        box-shadow: 0px 0px 5px #888888;
-      }
-      .submit-button:hover {
-        background: #f23f2f;
-        text-decoration: none;
-      }
    	</style>
   	</head>
 
@@ -138,38 +95,16 @@
           <h2>The Eat Project</h2>
       </div>
     </header>
-  <br>
-  <a href="{{ url_for('display_user_foods') }}"><button id="add-item" class="submit-button">Seller Page</button></a>
-  <a href="{{ url_for('sign_up') }}"><button id="login-button" class="submit-button">Login</button></a>
 
+  <form action="logout" id="logout-form" style="text-align:right; margin-right:2%">
+    <br>Logged in as {{ username }}
+    <input class="logout-button" id="logout-button" type="submit" value="Logout">
+  </form>
 
 
 	<h3>Enter your location to see available offerings near you. The map may took a moment to load</h3>
   <input id="pac-input" class="controls" type="text" placeholder="Enter search location">
 	<div id="map"></div>
-
-<table class="striped">
- <thead>
-   <tr>
-     <th data-field="title">Food Name</th>
-     <th data-field="cuisine">Cuisine</th>
-     <th data-field="ingredients">Description</th>
-     <th data-field="price">Price</th>
-     <th data-field="phone-number">Phone Number</th>
-     <th data-field="address">Zip Code</th>
-   </tr>
- </thead>
- {% for item in food %}
-   <tr>
-     <td>{{ item['food_name'] }}</td>
-     <td>{{ item['cuisine_type'] }}</td>
-     <td>{{ item['ingredients'] }}</td>
-     <td>{{ item['price'] }}</td>
-     <td>{{ item['phone_num'] }}</td>
-     <td>{{ item['zip_code'] }}</td>
-   </tr>
- {% endfor %}
-</table>
 
 
 <!-- GOOGLE MAPS API SCRIPT WITH KEY -->

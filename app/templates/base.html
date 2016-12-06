@@ -6,17 +6,17 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
-    <script type="text/javascript" src="/static/interactions.js"></script> 
+    <script type="text/javascript" src="/static/interactions.js"></script>
 
     <style>{% block styles %}{% endblock %}</style>
   </head>
 
   <body>
-  
+
     <header>
-      <img id="logo" src="/static/images/logo.png">  
+      <img id="logo" src="/static/images/logo.png">
       <div id="header-object2">
-          <h2>The Eat Project</h2>
+          <h2><a href="{{ url_for('home') }}">The Eat Project</a></h2>
       </div>
     </header>
 
@@ -27,17 +27,17 @@
     </form>
 
     {% endblock %}
-    
-<!--     
-  
+
+<!--
 
 
-    
+
+
 
 
   <footer>
     <h5>Copyright placeholder</h5>
   </footer>
-  
+
   </body>
 </html>

@@ -6,11 +6,10 @@
 
 
 {% block content %}
-  <h2>Login</h2>
   <!-- {% if error %}<p class="error">Error: {{ error }}{% endif %} -->
   <h2> Sign Up Form</h2>
   <form action="/sign_up" method="post" id="signup-form" name="login">
-    {{ form.hidden_tag() }}
+    {{ form.hidden_tag()}}
     <dl>
       <!-- <dt>Full Name:
       <dd><input type="text" name="username">
@@ -87,8 +86,8 @@
       {{ form.password(size=20) }} <br>
       </div>
     </dl>
-    <dd>
+    
       <!-- <p><input id="submit-button2" type="submit" id="signup" value="Sign Up"></p> -->
-      <p><input type="submit" id="signup" value="Sign Up"></p>
+      <input type="submit" id="signup" value="Sign Up">
   </form>
 {% endblock %}

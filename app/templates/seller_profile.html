@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+  EatProject: Seller Profile
+{% endblock %}
+
+
+{% block content %}
+<br>
+<a href="{{ url_for('add_item') }}"><button id="add-item" class="submit-button">Sell Item</button></a>
+  <h2>Your Profile</h2>
+
+  <table class="striped">
+ <thead>
+   <tr>
+     <th data-field="title">Food Name</th>
+     <th data-field="cuisine">Cuisine</th>
+   </tr>
+ </thead>
+ {% for item in food %}
+   <tr>
+     <td>{{ item['food_name'] }}</td>
+     <td>{{ item['cuisine_type'] }}</td>
+     <td> <button class="remove_tr" id= {{food['id']}}> Remove Offering </button> </td>
+   </tr>
+ {% endfor %}
+</table>
+
+{% endblock %}

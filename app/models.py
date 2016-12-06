@@ -7,7 +7,7 @@ def retrieve_user_foods(userid):
         con.row_factory = sql.Row
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON")
-        result_cur = cur.execute("select food from user_foods where userid =?",(userid,)).fetchall()
+        result_cur = cur.execute("select foodid from foods_user where userid =?",(userid,)).fetchall()
         for item in result_cur:
             print ("retrieving foods from retrieve foods")
             print (item[0])
@@ -39,12 +39,12 @@ def remove_food(id_value):
         result = cur.execute("delete from food where food_id=?",(id_value,))
     return result
 
-def retrieve_foods():
+def retrieve_all_foods():
     with sql.connect("app.db") as con:
         con.row_factory = sql.Row
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON")
-        result = cur.execute("select * from foods").fetchall()
+        result = cur.execute("select * from food").fetchall()
     return result
 
 def retrieve_users():
@@ -72,13 +72,15 @@ def retrieve_user_id(name):
         result = cur.execute("select user_id from users where username = ?", (name,)).fetchall()
     return result
 
-def insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, user_id, street_address, city, state, zip_code):
+def insert_food(food_name, ingredients, diet_restriction, cuisine_type, price, phone_num, user_id, street_address, city, state, zip_code):
     with sql.connect("app.db") as con:
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON")
-        cur.execute("INSERT INTO food (food_name, ingredients, diet_restriction, cuisine_type, price, phone_num, street_address, city, state, zip_code) VALUES (?,?,?,?,?,?,?,?,?,?)", (food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, street_address, city, state, zip_code))
+        cur.execute("INSERT INTO food (food_name, ingredients, diet_restriction, cuisine_type, price, phone_num, street_address, city, state, zip_code) VALUES (?,?,?,?,?,?,?,?,?,?)", (food_name, ingredients, diet_restriction, cuisine_type, price, phone_num, street_address, city, state, zip_code))
         food_id = cur.lastrowid
-        cur.execute("INSERT INTO user_foods (food,user) VALUES (?,?)", (food_id,user_id))
+        # cur.execute("INSERT INTO foods_user (userid,foodid) VALUES (?,?)", (user_id,food_id))
+        cur.execute("INSERT INTO foods_user (userid, foodid) VALUES (?,?)", (user_id, food_id))
+        # cur.execute("INSERT INTO users(username, password) VALUES (?,?)", ('HI', 'Parv'))
         con.commit()
 
 def insert_user(username, password):
@@ -87,3 +89,19 @@ def insert_user(username, password):
         cur.execute("PRAGMA foreign_keys = ON")
         cur.execute("INSERT INTO users (username, password) VALUES (?,?)", (username, password))
         con.commit()
+
+def retrieve_foods(userid):
+    query = []
+    with sql.connect("app.db") as con:
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON")
+        result_cur = cur.execute("select foodid from foods_user where userid =?",(userid,)).fetchall()
+        for item in result_cur:
+            print ("retrieving foods for this user")
+            print (item[0])
+        for item in result_cur:
+            result = cur.execute("select * from food where food_id = ?",(item[0],)).fetchall()
+            query.append(result[0])
+    print (query)
+    return query
