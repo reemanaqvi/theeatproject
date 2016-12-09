@@ -33,7 +33,7 @@
 			  box-shadow: 0px 0px 20px #888888;
    		}
 		  #logo {
- 			width: 4%;
+ 			  width: 4%;
   			margin: 1%;
   			margin-right: 3%;
 		  }
@@ -46,14 +46,14 @@
 		  	background-color: black;
 		  }
       .controls {
-      margin-top: 10px;
-      border: 1px solid transparent;
-      border-radius: 2px 0 0 2px;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      height: 32px;
-      outline: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
       #pac-input {
         background-color: #fff;
@@ -64,6 +64,21 @@
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
         width: 300px;
+      }
+      #inputFilter {
+        /*background-color: #cef442;*/
+        box-shadow: 0px 0px 20px #cef442;
+        font-family: Roboto;
+        font-size: 15px;
+        margin-left: 27%;
+        margin-right: 27%;
+        margin-top: 3%;
+        margin-bottom:2%;
+        text-align: center;
+        width: 46%;
+        border: 2px solid grey;
+        padding: 1%;
+        border-radius: 15px;
       }
       #pac-input:focus {
         border-color: #4d90fe;
@@ -95,6 +110,18 @@
         margin-left: 7%;
         margin-bottom: 14%;
       }
+      th {
+        background-color: #EDEDED;
+        height:40px;
+      }
+      tr:nth-child(even) {
+       background-color: #EDEDED;
+       height: 35px;
+     }
+      tr:nth-child(odd) {
+       background-color: white;
+       height: 35px;
+     }
       #logout-form{
         text-align: right;
         margin-right: 2%;
@@ -111,7 +138,7 @@
         background-color: #cef442;
         width: 10%;
         height: 5%;
-        font-size: 16px;
+        font-size: 14px;
         color: black;
         -moz-border-radius:8px;
         -webkit-border-radius:8px;
@@ -143,12 +170,16 @@
   <a href="{{ url_for('sign_up') }}"><button id="login-button" class="submit-button">Login</button></a>
 
 
-
+<!-- MAP -->
 	<h3>Enter your location to see available offerings near you. The map may took a moment to load</h3>
-  <input id="pac-input" class="controls" type="text" placeholder="Enter search location">
+  <input id="pac-input" class="controls" type="text" placeholder="Where are you?">
 	<div id="map"></div>
 
-<table class="striped">
+<!-- TABLE -->
+<input type="text" id="inputFilter" placeholder="Filter results by cuisine/price/zipcode...">
+
+
+<table id="food-offering" class="striped">
  <thead>
    <tr>
      <th data-field="title">Food Name</th>
@@ -156,33 +187,50 @@
      <th data-field="ingredients">Description</th>
      <th data-field="price">Price</th>
      <th data-field="phone-number">Phone Number</th>
-     <th data-field="address">Zip Code</th>
    </tr>
  </thead>
  {% for item in food %}
-   <tr>
+   <tr class="seller-results">
      <td>{{ item['food_name'] }}</td>
      <td>{{ item['cuisine_type'] }}</td>
      <td>{{ item['ingredients'] }}</td>
      <td>{{ item['price'] }}</td>
      <td>{{ item['phone_num'] }}</td>
-     <td>{{ item['zip_code'] }}</td>
    </tr>
  {% endfor %}
 </table>
 
 
-<!-- GOOGLE MAPS API SCRIPT WITH KEY -->
-	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxnXLF77Tj2wHcTj437zdcRL73UvBcvig&v=3&callback=initMap">
-   </script> -->
-
-
+<!-- SEARCH FILTER FOR TABLE -->
+<script>
+  $('#inputFilter').keyup(function() {
+    var that = this;
+    $.each($('.seller-results'),
+    function(i, val) {
+      if ($(val).text().indexOf($(that).val()) == -1) {
+        $('#food-offering').animate({
+          marginTop: 0
+        },
+        50,
+        function() {
+          $('.seller-results').eq(i).hide();
+        });
+      } else {
+        $('#food-offering').animate({
+          marginTop: 0
+        },
+        50,
+        function() {
+          $('.seller-results').eq(i).show();
+        });
+      }
+    });
+  });
+</script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxnXLF77Tj2wHcTj437zdcRL73UvBcvig&libraries=places&callback=initAutocomplete"
          async defer></script>
 
-<!-- 		<footer>
-		  <h5>Copyright placeholder</h5>
-		</footer> -->
+
 	</body>
 </html>

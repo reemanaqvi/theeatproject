@@ -1,10 +1,3 @@
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 
 function initAutocomplete() {
@@ -25,12 +18,78 @@ function initAutocomplete() {
   });
 
   var markers = [];
+  var locations = [];
 
-  var locations = [
-            {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-            {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-            {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}}
-            ];
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: "url_for('map')",
+  //   data: { data:
+  //     JSON.stringify({
+  //       "title": food_name,
+  //       "lat": lat,
+  //       "lng": lng,
+  //     })
+  //   },
+  //   success: function(response) {
+  //            response
+  //        }
+  //  // do something
+  // });
+
+//   $(document).on('click', 'button.remove_tr', function() {
+//   console.log("hello")
+//    var food_id = $(this).attr("id");
+//    console.log(food_id)
+//    $.ajax({
+//      url: "/delete_food",
+//      type: "post",
+//      data: { data:
+//        JSON.stringify({
+//          "value": food_id,
+//        })
+//      },
+//      success: function(response) {
+//          response
+//      }
+//    });
+//
+//    $(this).parent().parent().remove();
+//
+//    // retrieve user input
+//    // var user_input = $('#search-field').val();
+//    // callAPI(user_input)
+// })
+
+  // for (var i = 0; i < query.length; i++){
+  //   console.log(i[food_name]);
+  //   // locations.append[{title: i[food_name], location:{i[lat], i[lng]}}];
+  //   console.log(locations);
+  // }
+
+
+  // var locations = [
+  //           {title: 'Food', price: '$8', location: {lat: 40.7444883, lng: -73.9949465}},
+  //           {title: 'Street Food', price: '$8', location: {lat: 40.7281777, lng: -73.984377}},
+  //           {title: 'Subway Food', price: '$8', location: {lat: 40.7195264, lng: -74.0089934}},
+  //           {title: 'Pad Thai', price: '$8', location: {lat: 37.879594, lng: -122.268935}},
+  //           {title: "Parv's Chicken", price: '$8',location: {lat: 37.849533, lng: -122.25196}},
+  //           {title: "Mr. Bang's Surprise", price: '$8', location: {lat: 37.87149, lng: -122.275496}},
+  //           {title: "Carlo's Street Spam",  price: '$8', location: {lat: 37.869797, lng: -122.267582}},
+  //           {title: 'Pizza', price: '$8', location: {lat: 37.855387, lng: -122.263179}},
+  //           {title: 'Burritos', price: '$8', location: {lat: 37.849274, lng: -122.271633}},
+  //           {title: 'Chaat', price: '$8', location: {lat: 37.873575, lng: -122.25442}},
+  //           {title: 'Mediterranean', price: '$8', location: {lat: 37.861346, lng: -122.250266}}
+  //           ];
+
+
+
+
+  // var locations = [
+  //         {title: 'Food', location: {lat: 37.8744883, lng: -122.2749465}},
+  //         {title: 'East Village Hip Studio', location: {lat: 37.8781777, lng: -122.2677}},
+  //         {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 37.8695264, lng: -122.2789934}}
+  //         ];
 
   var largeInfowindow = new google.maps.InfoWindow();
           // var bounds = new google.maps.LatLngBounds();
@@ -91,7 +150,6 @@ function initAutocomplete() {
         map: map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
       }));
 
       if (place.geometry.viewport) {
@@ -121,11 +179,11 @@ function populateInfoWindow(marker, infowindow) {
   $(document).on('click', 'button.remove_tr', function() {
       // console.log($(this).attr("id"));
       $.ajax({
-        url: "/delete_trip",
+        url: "/delete_food",
         type: "post",
         data: { data:
           JSON.stringify({
-            "id": $(this).attr("id")
+            "value": $(this).attr("food_id")
           })
         },
         success: function(response) {
@@ -139,3 +197,95 @@ function populateInfoWindow(marker, infowindow) {
       // var user_input = $('#search-field').val();
       // callAPI(user_input)
   })
+
+
+  $(document).on('click', 'button.remove_tr', function() {
+	console.log("hello")
+   var food_id = $(this).attr("id");
+   console.log(food_id)
+   $.ajax({
+     url: "/delete_food",
+     type: "post",
+     data: { data:
+       JSON.stringify({
+         "value": food_id,
+       })
+     },
+     success: function(response) {
+         response
+     }
+   });
+
+   $(this).parent().parent().remove();
+
+   // retrieve user input
+   // var user_input = $('#search-field').val();
+   // callAPI(user_input)
+})
+
+
+
+
+
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("food-offering");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+// GEOCODER ON ADD_ITEM PAGE
+var geocoder;
+var map;
+
+  function initMap() {
+    console.log("in initMap()");
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+      zoom: 8,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+  }
+
+  function codeAddress() {
+    console.log("in codeAddress()");
+    var address = document.getElementById("address").value;
+    var loc=[];
+    var latlng = [];
+
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        loc[0] = results[0].geometry.location.lat();
+        loc[1] = results[0].geometry.location.lng();
+        console.log("went in if in codeAddress");
+        var lat = loc[0];
+        var lng = loc[1];
+        console.log(lat);
+        console.log(lng);
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+        // return (coordinates);
+
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+        console.log("went in else in codeAddress");
+      }
+    });
+  }

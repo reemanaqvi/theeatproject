@@ -14,11 +14,13 @@ create table food (
 	cuisine_type TEXT NOT NULL,
 	price INTEGER NOT NULL,
 	phone_num INTEGER NOT NULL,
-	street_address TEXT NOT NULL,
-	city TEXT NOT NULL,
-	state TEXT NOT NULL,
-	zip_code INTEGER NOT NULL
+	-- street_address TEXT NOT NULL,
+	-- city TEXT NOT NULL,
+	-- state TEXT NOT NULL,
+	-- zip_code INTEGER NOT NULL
 	-- image BLOB NOT NULL
+	lat REAL NOT NULL,
+	lng REAL NOT NULL
 	);
 
 -- users and foods have many to many relationship
@@ -28,5 +30,5 @@ create table foods_user (
 	userid INTEGER,
 	foodid INTEGER,
 	FOREIGN KEY (userid) REFERENCES users(user_id),
-	FOREIGN KEY (foodid) REFERENCES food(food_id)
+	FOREIGN KEY (foodid) REFERENCES food(food_id) ON DELETE CASCADE
 	);

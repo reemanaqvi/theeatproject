@@ -67,6 +67,22 @@ input{
   background: #f23f2f;
   text-decoration: none;
 }
+
+#add-item {
+  background-color: #cef442;
+  width: 10%;
+  height: 5%;
+  font-size: 14px;
+  color: black;
+  -moz-border-radius:8px;
+  -webkit-border-radius:8px;
+  border-radius: 2px;
+  cursor:pointer;
+  text-decoration:none;
+  border: none;
+  box-shadow: 0px 0px 5px #888888;
+}
+
 #submit-button2 {
   background-color:#cef442;
   width: 15%;
@@ -79,6 +95,19 @@ input{
   border: none;
   box-shadow: 0px 0px 5px #888888;
   text-align: center;
+}
+#geocode-button {
+  background-color: grey;
+  font-size: 10px;
+  /*width: 15%;*/
+  color: white;
+  -moz-border-radius:8px;
+  -webkit-border-radius:8px;
+  border-radius:8px;
+  cursor:pointer;
+  text-decoration:none;
+  border: none;
+  box-shadow: 0px 0px 5px #888888;
 }
 
 select {

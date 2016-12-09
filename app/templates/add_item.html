@@ -13,11 +13,11 @@
 <!--       <div class="divider"></div>
       <div class="section"> -->
 	        <p>
-	          Name of Food Item:<br>
+	          Name of Food Item<br>
 	          {{ form.food_name(size=60) }}<br>
 	        </p>
 	        <p>
-	          Ingredients:<br>
+	          Ingredients<br>
 	          {{ form.ingredients(size=60) }}<br>
 	        </p>
 	        <p>
@@ -25,7 +25,7 @@
 	          {{ form.diet_restriction }}<br>
 	        </p>
 	        <p>
-	          Cuisine:<br>
+	          Cuisine<br>
 	          {{ form.cuisine_type(size=60) }}<br>
 	        </p>
 	        <p>
@@ -33,31 +33,32 @@
 	          {{ form.price(size=60) }}<br>
 	        </p>
 	        <p>
-	          Phone number:<br>
+	          Phone number<br>
 	          {{ form.phone_num(size=60) }}<br>
 	        </p>
-					<p>
-	          Street Address:<br>
-	          {{ form.street_address(size=120) }}<br>
-	        </p>
-					<p>
-	          City:<br>
-	          {{ form.city(size=120) }}<br>
-	        </p>
-					<p>
-	          State:<br>
-	          {{ form.state(size=120) }}<br>
-	        </p>
-					<p>
-	          Zip Code:<br>
-	          {{ form.zip_code(size=120) }}<br>
-	        </p>
-					<p>
-	          Countyr:<br>
-	          {{ form.country(size=120) }}<br>
-	        </p>
 
-        	<!-- <p><input type="submit-button" value="List Item Now!"></p> -->
+<!-- GEOCODING -->
+<body onload="initMap()">
+ <div id="map_canvas" style="width: 320px; height: 40px; display:none;"></div>
+  <div>
+  			<p>Street Address - Must Be Verified Before Submitting Item</p>
+    <input id="address" type="textbox" placeholder="Enter pickup address">
+ 	<br><input type="button" id="geocode-button" value="Grab my coordinates!" onclick="codeAddress()"></p>
+  </div>
+
+	<div id="output1">{{ form.lat }}</div>
+	<div id="output2">{{ form.lng }}</div>
+
+
+<!-- GEOCODING API key. -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxnXLF77Tj2wHcTj437zdcRL73UvBcvig&callback=initMap">
+</script>
+
+
+
+
+
 					<p><input type="submit" id="add_item" value="Post Item"></p>
     </form>
 

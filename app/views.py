@@ -49,7 +49,15 @@ def sign_up():
 def home():
 	userid = escape(session['user_id'])
 	food = retrieve_all_foods()
+	print(food)
 	return render_template('home.html', food=food)
+
+@app.route('/map', methods=['GET', 'POST'])
+def map():
+	food = retrieve_all_foods()
+	print(food)
+	return render_template('home.html', food=food)
+
 
 @app.route('/logout')
 def logout():
@@ -61,10 +69,11 @@ def logout():
 
 @app.route('/display_user_foods', methods=['GET', 'POST'])
 def display_user_foods():
-    userid = escape(session['user_id'])
-    food = retrieve_foods(userid)
-    print (food)
-    return render_template('seller_profile.html', food=food)
+	print('DISPLAY USER FOODS')
+	userid = escape(session['user_id'])
+	food = retrieve_foods(userid)
+	print(food)
+	return render_template('seller_profile.html', food=food)
 
 
 
@@ -80,13 +89,17 @@ def add_item():
 		cuisine_type = foodForm.cuisine_type.data
 		price = foodForm.price.data
 		phone_num = foodForm.phone_num.data
-		street_address = foodForm.street_address.data
-		city = foodForm.city.data
-		state = foodForm.state.data
-		zip_code = foodForm.zip_code.data
-		country = foodForm.country.data
+		# street_address = foodForm.street_address.data
+		# city = foodForm.city.data
+		# state = foodForm.state.data
+		# zip_code = foodForm.zip_code.data
+		# country = foodForm.country.data
+		lat = float(foodForm.lat.data)
+		lng = float(foodForm.lng.data)
+		print('lat: %s' % lat)
+		print('lng: %s' % lng)
 		userid = escape(session['user_id'])
-		insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, userid, street_address, city, state, zip_code)
+		insert_food(food_name,ingredients,diet_restriction, cuisine_type, price, phone_num, userid, lat, lng)
 		return redirect(url_for('display_user_foods'))
 	return render_template('add_item.html', form=foodForm)
 
@@ -94,7 +107,12 @@ def add_item():
 
 @app.route('/delete_food', methods=['GET','POST'])
 def delete_food():
-    data = json.loads(request.form.get('data'))
-    id = int(data['id'].encode('ascii','ignore'))
-    remove_food(id)
-    return True
+	print("test")
+	print(request.form.get('data'))
+	data = json.loads(request.form.get('data'))
+	print(data)
+	# print(int(data['value'].encode('ascii', 'ignore')))
+	val = int(data['value'].encode('ascii', 'ignore'))
+	print('val:%s' % val)
+	result = remove_food(val)
+	return result

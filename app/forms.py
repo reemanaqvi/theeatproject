@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, IntegerField, SelectField
+from wtforms import StringField, IntegerField, SelectField, FloatField, HiddenField
 from flask_wtf.html5 import EmailField
 from wtforms.validators import DataRequired
 
@@ -15,12 +15,14 @@ class FoodForm(Form):
 	cuisine_type = StringField('cuisine_type', validators=[DataRequired()])
 	price = IntegerField('price', validators=[DataRequired()])
 	phone_num = IntegerField('phone_num', validators=[DataRequired()])
+	lat = HiddenField('lat', validators=[DataRequired()])
+	lng = HiddenField('lng', validators=[DataRequired()])
 	# image = BLOB('image', validators=[DataRequired()])
-	street_address = StringField('street-address', validators=[DataRequired()])
-	city = StringField('city', validators=[DataRequired()])
-	state = StringField('state', validators=[DataRequired()])
-	zip_code = StringField('zipcode', validators=[DataRequired()])
-	country = StringField('country', validators=[DataRequired()])
+	# street_address = FloatField('street-address', validators=[DataRequired()])
+	# city = StringField('city', validators=[DataRequired()])
+	# state = StringField('state', validators=[DataRequired()])
+	# zip_code = StringField('zipcode', validators=[DataRequired()])
+	# country = StringField('country', validators=[DataRequired()])
 
 class LoginForm(Form):
 	username = StringField('username', validators=[DataRequired()])
