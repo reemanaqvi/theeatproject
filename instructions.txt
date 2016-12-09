@@ -1,3 +1,7 @@
+
+To use - log in and either add a food item, or click the ‘eat project’ in the site header to be routed to the home page where you can see all food items. Seller page allows sellers to delete offerings. Kind of busted site overall, but you can feel the angst that went into it’s design.
+
+
 We followed the logic of the travel app, and this app flows in a very similar fashion. The idea is that someone should be able to use this app without logging in, so the flow allows for users to simply access the app simply for it’s map functionality.
 
 If one desires to ‘post’ a meal on the site, they are routed to a login page where they can either log in as a returning user (and have their credential authenticated against the sqlite db record at that time), or be routed to a signup page where their user information will be routed to the ‘users’ table in our database.

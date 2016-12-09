@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, session, url_for, escape, 
 from app import app, models, db
 from .forms import SignupForm, LoginForm, FoodForm
 from .models import *
+from flask.json import jsonify
 
 @app.route('/')
 @app.route('/index')
@@ -57,6 +58,20 @@ def map():
 	food = retrieve_all_foods()
 	print(food)
 	return render_template('home.html', food=food)
+
+@app.route('/get_lat_lng', methods=['GET', 'POST'])
+def get_lat_lng():
+	food = retrieve_all_foods()
+	# print(food)
+	response_lat = []
+	for item in food:
+		dictionary = {}
+		dictionary['lat'] = item['lat']
+		dictionary['lng'] = item['lng']
+		dictionary['food_name'] = item['food_name']
+		response_lat.append(dictionary)
+
+	return jsonify({'response': response_lat})
 
 
 @app.route('/logout')

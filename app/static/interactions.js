@@ -21,21 +21,59 @@ function initAutocomplete() {
   var locations = [];
 
 
-  // $.ajax({
-  //   type: "POST",
-  //   url: "url_for('map')",
-  //   data: { data:
-  //     JSON.stringify({
-  //       "title": food_name,
-  //       "lat": lat,
-  //       "lng": lng,
-  //     })
-  //   },
-  //   success: function(response) {
-  //            response
-  //        }
-  //  // do something
-  // });
+  $.ajax({
+    type: "POST",
+    url: "/get_lat_lng",
+    // data: { data:
+    //   JSON.stringify({
+    //     "title": food_name,
+    //     "lat": lat,
+    //     "lng": lng,
+    //   })
+    // },
+    success: function(locations) {
+            console.log('meow')
+            console.log(locations);
+            console.log('meow')
+            console.log(locations.response)
+            var largeInfowindow = new google.maps.InfoWindow();
+                    // var bounds = new google.maps.LatLngBounds();
+
+                    // The following group uses the location array to create an array of markers on initialize.
+                    for (var i = 0; i < locations.response.length; i++) {
+                      // Get the position from the location array.
+                      var position_lat = locations.response[i].lat;
+                      var position_lng = locations.response[i].lng;
+
+                      position = {}
+                  		position['lat'] = position_lat
+                  		position['lng'] = position_lng
+                      console.log(position)
+                      // {lat: 40.7281777, lng: -73.984377}
+
+                      var title = locations.response[i].food_name;
+                      console.log(position)
+                      console.log(title)
+                      // Create a marker per location, and put into markers array.
+                      var marker = new google.maps.Marker({
+                        map: map,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                        position: position,
+                        title: title,
+                        animation: google.maps.Animation.DROP,
+                        id: i
+                      });
+                      // Push the marker to our array of markers.
+                      markers.push(marker);
+                      // Create an onclick event to open an infowindow at each marker.
+                      marker.addListener('click', function() {
+                        populateInfoWindow(this, largeInfowindow);
+                      });
+                      // bounds.extend(markers[i].position);
+                    }
+         }
+   // do something
+  });
 
 //   $(document).on('click', 'button.remove_tr', function() {
 //   console.log("hello")
@@ -90,32 +128,32 @@ function initAutocomplete() {
   //         {title: 'East Village Hip Studio', location: {lat: 37.8781777, lng: -122.2677}},
   //         {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 37.8695264, lng: -122.2789934}}
   //         ];
-
-  var largeInfowindow = new google.maps.InfoWindow();
-          // var bounds = new google.maps.LatLngBounds();
-
-          // The following group uses the location array to create an array of markers on initialize.
-          for (var i = 0; i < locations.length; i++) {
-            // Get the position from the location array.
-            var position = locations[i].location;
-            var title = locations[i].title;
-            // Create a marker per location, and put into markers array.
-            var marker = new google.maps.Marker({
-              map: map,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-              position: position,
-              title: title,
-              animation: google.maps.Animation.DROP,
-              id: i
-            });
-            // Push the marker to our array of markers.
-            markers.push(marker);
-            // Create an onclick event to open an infowindow at each marker.
-            marker.addListener('click', function() {
-              populateInfoWindow(this, largeInfowindow);
-            });
-            // bounds.extend(markers[i].position);
-          }
+  // 
+  // var largeInfowindow = new google.maps.InfoWindow();
+  //         // var bounds = new google.maps.LatLngBounds();
+  //
+  //         // The following group uses the location array to create an array of markers on initialize.
+  //         for (var i = 0; i < locations.length; i++) {
+  //           // Get the position from the location array.
+  //           var position = locations[i].location;
+  //           var title = locations[i].title;
+  //           // Create a marker per location, and put into markers array.
+  //           var marker = new google.maps.Marker({
+  //             map: map,
+  //             icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+  //             position: position,
+  //             title: title,
+  //             animation: google.maps.Animation.DROP,
+  //             id: i
+  //           });
+  //           // Push the marker to our array of markers.
+  //           markers.push(marker);
+  //           // Create an onclick event to open an infowindow at each marker.
+  //           marker.addListener('click', function() {
+  //             populateInfoWindow(this, largeInfowindow);
+  //           });
+  //           // bounds.extend(markers[i].position);
+  //         }
   // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
